@@ -9,16 +9,25 @@ public class GameOfLife {
     GameOfLife(int size){       //sets up board when the size is passed//
         this.size = size;
         int[][] board = new int[size][size];
+        this.board = board;
         int[][] previous = new int[size][size];
+        this.previous = previous;
     }
 
     GameOfLife(int[][] newBoard){       //passes a board and sets it as previous//
         size = newBoard.length;
         int[][] previous = new int[size][size];
-        int[][] board = new int[size][size];
+        this.previous = previous;
+        int [][] board = new int[size][size];
+        this.board = board;
+        for (int i = 0; i < newBoard.length; i++) {
+            for (int j = 0; j < newBoard.length; j++) {
+                previous[i][j] = newBoard[i][j];
+            }
+        }
         for (int i = 0; i < newBoard.length; i++){
             for (int j = 0; j < newBoard.length; j++){
-                previous[i][j] = newBoard[i][j];
+                board[i][j] = newBoard[i][j];
             }
         }
     }
@@ -56,113 +65,144 @@ public class GameOfLife {
         }
     }
 
-    int neighbors(int row, int col){        //counts the number of live neighbors the cell has//
+    int neighbors(int row, int col){
         int neighbor = 0;
-        if(col == 0){       //conditions for the left edge of the board//
-            if (row == 0){
-                if(board[row][col + 1] == 1){
+        if (row == 0) {
+            if (col == 0) {
+                if (previous[row][col + 1] == 1) {
                     neighbor += 1;
                 }
-                if (board[row + 1][col] == 1){
+                if (previous[row + 1][col] == 1) {
                     neighbor += 1;
                 }
-                if (board[row + 1][col + 1] == 1){
-                    neighbor += 1;
-                }
-            }
-            else if (row == board.length - 1){
-                if(board[row - 1][col] == 1){
-                    neighbor += 1;
-                }
-                if (board[row][col + 1] == 1){
-                    neighbor += 1;
-                }
-                if (board[row - 1][col + 1] == 1){
+                if (previous[row + 1][col + 1] == 1) {
                     neighbor += 1;
                 }
             }
-            else {
-                if(board[row - 1][col] == 1){
+            else if (col == size - 1) {
+                if (previous[row][col - 1] == 1) {
                     neighbor += 1;
                 }
-                if (board[row - 1][col + 1] == 1){
+                if (previous[row + 1][col - 1] == 1) {
                     neighbor += 1;
                 }
-                if (board[row][col + 1] == 1){
+                if (previous[row + 1][col] == 1) {
                     neighbor += 1;
                 }
-                if (board[row + 1][col + 1] == 1){
+            } else {
+                if (previous[row][col - 1] == 1) {
                     neighbor += 1;
                 }
-                if (board[row + 1][col] == 1){
+                if (previous[row + 1][col - 1] == 1) {
                     neighbor += 1;
                 }
-            }
-        }
-        else if (col == board.length - 1){      //conditions for right edge of the board//
-            if (row == 0){
-                if(board[row][col - 1] == 1){
+                if (previous[row + 1][col] == 1) {
                     neighbor += 1;
                 }
-                if (board[row + 1][col - 1] == 1){
+                if (previous[row + 1][col + 1] == 1) {
                     neighbor += 1;
                 }
-                if (board[row + 1][col] == 1){
-                    neighbor += 1;
-                }
-            }
-            else if (row == board.length - 1){
-                if(board[row][col - 1] == 1){
-                    neighbor += 1;
-                }
-                if (board[row - 1][col - 1] == 1){
-                    neighbor += 1;
-                }
-                if (board[row - 1][col] == 1){
-                    neighbor += 1;
-                }
-            }
-            else {
-                if(board[row - 1][col] == 1){
-                    neighbor += 1;
-                }
-                if (board[row - 1][col - 1] == 1){
-                    neighbor += 1;
-                }
-                if (board[row][col - 1] == 1){
-                    neighbor += 1;
-                }
-                if (board[row + 1][col - 1] == 1){
-                    neighbor += 1;
-                }
-                if (board[row + 1][col] == 1){
+                if (previous[row][col + 1] == 1) {
                     neighbor += 1;
                 }
             }
         }
-        else{                                  //conditions for the rest of the board//
-            if(board[row - 1][col] == 1){
+        else if (row == size - 1) {
+            if (col == 0) {
+                if (previous[row - 1][col] == 1) {
+                    neighbor += 1;
+                }
+                if (previous[row][col + 1] == 1) {
+                    neighbor += 1;
+                }
+                if (previous[row - 1][col + 1] == 1) {
+                    neighbor += 1;
+                }
+            } else if (col == size - 1) {
+                if (previous[row][col - 1] == 1) {
+                    neighbor += 1;
+                }
+                if (previous[row - 1][col - 1] == 1) {
+                    neighbor += 1;
+                }
+                if (previous[row - 1][col] == 1) {
+                    neighbor += 1;
+                }
+            } else {
+                if (previous[row][col - 1] == 1) {
+                    neighbor += 1;
+                }
+                if (previous[row - 1][col - 1] == 1) {
+                    neighbor += 1;
+                }
+                if (previous[row - 1][col] == 1) {
+                    neighbor += 1;
+                }
+                if (previous[row - 1][col + 1] == 1) {
+                    neighbor += 1;
+                }
+                if (previous[row][col + 1] == 1) {
+                    neighbor += 1;
+                }
+            }
+        }
+        else if (col == 0){
+            if(previous[row - 1][col] == 1){
                 neighbor += 1;
             }
-            if (board[row - 1][col + 1] == 1){
+            if (previous[row - 1][col + 1] == 1){
                 neighbor += 1;
             }
-            if (board[row][col + 1] == 1){
+            if (previous[row][col + 1] == 1){
                 neighbor += 1;
             }
-            if(board[row + 1][col + 1] == 1){
+            if (previous[row + 1][col + 1] == 1){
                 neighbor += 1;
             }
-            if (board[row + 1][col] == 1){
+            if (previous[row + 1][col] == 1){
                 neighbor += 1;
             }
-            if (board[row + 1][col - 1] == 1){
+        }
+        else if (col == size - 1){
+            if(previous[row - 1][col] == 1){
                 neighbor += 1;
             }
-            if (board[row][col - 1] == 1){
+            if (previous[row - 1][col - 1] == 1){
                 neighbor += 1;
             }
-            if (board[row - 1][col - 1] == 1){
+            if (previous[row][col - 1] == 1){
+                neighbor += 1;
+            }
+            if (previous[row + 1][col - 1] == 1){
+                neighbor += 1;
+            }
+            if (previous[row + 1][col] == 1){
+                neighbor += 1;
+            }
+        }
+        else {
+            if(previous[row - 1][col] == 1){
+                neighbor += 1;
+            }
+            if (previous[row - 1][col + 1] == 1){
+                neighbor += 1;
+            }
+            if (previous[row][col + 1] == 1){
+                neighbor += 1;
+            }
+            if(previous[row + 1][col + 1] == 1){
+                neighbor += 1;
+            }
+            if (previous[row + 1][col] == 1){
+                neighbor += 1;
+            }
+            if (previous[row + 1][col - 1] == 1){
+                neighbor += 1;
+            }
+            if (previous[row][col - 1] == 1){
+                neighbor += 1;
+            }
+            if (previous[row - 1][col - 1] == 1){
                 neighbor += 1;
             }
         }
