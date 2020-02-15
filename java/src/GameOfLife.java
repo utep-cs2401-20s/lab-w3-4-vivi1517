@@ -18,8 +18,6 @@ public class GameOfLife {
         size = newBoard.length;
         int[][] previous = new int[size][size];
         this.previous = previous;
-        int [][] board = new int[size][size];
-        this.board = board;
         for (int i = 0; i < newBoard.length; i++) {
             for (int j = 0; j < newBoard.length; j++) {
                 previous[i][j] = newBoard[i][j];
@@ -43,7 +41,7 @@ public class GameOfLife {
             }
         }
         for (int i = 0; i < previous.length; i++){         //look at previous and change the squares in board//
-            for (int j = 0; j < previous.length; j++){
+            for (int j = 0; j < previous[i].length; j++){
                 int cellsAlive = neighbors(i, j);//for each cell count neighbors and update state//
                 if (previous[i][j] == 1){      //call neighbors in this method
                     if (cellsAlive < 2){
@@ -218,8 +216,9 @@ public class GameOfLife {
     void printBoard(){
         for (int i = 0; i < board.length; i++){
             for (int j = 0; j < board.length; j++){
-                System.out.print(board[i][j]);
+                System.out.print(board[i][j] + " ");
             }
+            System.out.print("\n");
         }
     }
 
